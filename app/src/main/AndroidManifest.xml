@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:usesCleartextTraffic="true"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logoverd"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.App_Ecosense"
+        tools:targetApi="31">
+        <activity
+            android:name=".models.PlantaDetail"
+            android:exported="false" />
+        <activity
+            android:name=".empresa.Dispositius"
+            android:exported="false" />
+        <activity
+            android:name=".empresa.Contacte"
+            android:exported="false" />
+        <activity
+            android:name=".empresa.InfoNosaltres"
+            android:exported="false" />
+        <activity
+            android:name=".PantallaHome"
+            android:exported="false" />
+        <activity
+            android:name=".comptes.CrearCompte"
+            android:exported="false" />
+        <activity
+            android:name=".comptes.NovaContrassenya"
+            android:exported="false" />
+        <activity
+            android:name=".comptes.RecuperarContrassenya"
+            android:exported="false" />
+        <activity
+            android:name=".comptes.IniciSessio"
+            android:exported="false" />
+        <activity
+            android:name=".start.SplashScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".start.MainActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

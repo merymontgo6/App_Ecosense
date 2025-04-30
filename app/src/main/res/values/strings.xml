@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">App_Ecosense</string>
+    <string name="titol">ECOSENSE</string>
+    <string name="iniciarSessio">Iniciar Sessió</string>
+    <string name="slogan">Perquè gestionar, significa estalviar</string>
+    <string name="crearC">Crear compte</string>
+    <string name="titolNom">Nom o Adreça electrònica</string>
+    <string name="textNom">Insereix el teu nom:</string>
+    <string name="insereixcontra">Insereix contrassenya</string>
+    <string name="contrassenyaHint">**********</string>
+    <string name="email">Email</string>
+    <string name="emailInserir">Insereix el teu email</string>
+    <string name="cancel">Cancel.lar</string>
+    <string name="restablirC">Restablir</string>
+    <string name="restablir">Restablir contrassenya</string>
+    <string name="oblidaC">Has oblidat la contrassenya?</string>
+    <string name="novacontras">Nova contrassenya:</string>
+    <string name="nom">Nom:</string>
+    <string name="cognom">Cognoms:</string>
+    <string name="adrecaelec">Adreça electrònica</string>
+    <string name="contrassenya">Contrasenya:</string>
+    <string name="conficontrassenya">Confirmar contrasenya:</string>
+    <string name="titolInici">Les meves plantes</string>
+    <string name="sobreNosaltres">Sobre nosaltres</string>
+    <string name="dispositius">Dispositius</string>
+    <string name="contacte">Contacte</string>
+    <string name="search">Search</string>
+    <string name="nd_open">Obrir menú</string>
+    <string name="nd_close">Tancar menú</string>
+    <string name="enviar_correu">Envieu-nos un correu electrònic</string>
+    <string name="destinatari">Destinatari</string>
+    <string name="assumpte">Assumpte</string>
+    <string name="value">Value</string>
+    <string name="cos">Cos</string>
+    <string name="missatgecontacte">Ens posarem en contacte el més aviat possible</string>
+    <string name="enviar">Enviar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="saluts">Benvingut!</string>
+    <string name="els_nostres_sensors">Els nostres sensors</string>
+    <string name="qui_som">Qui som?</string>
+    <string name="qui_som_texte">
+        A ECOSENSE, som una companyia compromesa amb la sostenibilitat i la tecnologia aplicada al benestar del medi ambient. Ens especialitzem en el disseny i venda de sensors intel·ligents que permeten monitorar l’estat de les plantes en temps real, afavorint una gestió eficient del reg i dels recursos naturals.
+        Amb les nostres solucions, ajudem tant a particulars com a professionals a optimitzar el consum d’aigua, millorar la salut de les plantes i reduir l’impacte ecològic.
+    </string>
+    <string name="qui_som_texte_2">Creiem en un futur verd on la tecnologia i la natura treballen plegades per protegir el planeta.</string>
+    <string name="veure_mes_dispositius">Veure més a Dispositius</string>
+    <string name="els_nostres_sensors_texte">Els sensors mesuren la humitat, la llum i la temperatura per ajudar-te a cuidar millor les plantes. Amb aquestes dades, pots regar només quan cal, estalviant aigua i afavorint un ús eficient dels recursos.</string>
+    <string name="els_nostres_sensors_texte2">Són fàcils d’instal·lar i es connecten amb el teu mòbil, permetent un control intel·ligent i ecològic, tant a casa com en jardins o horts.</string>
+    <string name="detalls_dis">Més detalls</string>
+    <string name="detalls_dis_texte">Els sensors són dissenyats per ser resistents a les condicions ambientals extremes, com ara la pluja o l`exposició al sol, garantint una llarga durabilitat i un rendiment fiable a llarg termini.</string>
+
+</resources>
