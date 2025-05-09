@@ -1,5 +1,6 @@
 package com.example.app_ecosense
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -12,13 +13,16 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.app_ecosense.accesibilitat.ocultarBarra
 import com.example.app_ecosense.info.EcosenseApiClient
+import com.example.app_ecosense.info.ZonaResponse
 import com.example.app_ecosense.menu.BaseActivity
 import com.example.app_ecosense.menu.BottomMenu
 import com.example.app_ecosense.models.Planta
-import com.example.app_ecosense.models.PlantaDetail
-import com.example.app_ecosense.models.ZonaResponse
+import com.example.app_ecosense.models.PlantaDetailModelo
+import com.example.app_ecosense.plantes.ZonaDetail
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -111,10 +115,9 @@ class PantallaHome : BaseActivity() {
     }
 
     private fun obtenerIdUsuario(): Int {
-        return 1
+        val sharedPref = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        return sharedPref.getInt("user_id", 0) // Devuelve 0 si no encuentra nada
     }
-
-
 
     private fun mostrarMensajeSinPlantas() {
         val emptyText = TextView(this).apply {
@@ -143,6 +146,19 @@ class PantallaHome : BaseActivity() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
+
+            // Añadir click listener
+            setOnClickListener {
+                val intent = Intent(this@PantallaHome, ZonaDetail::class.java).apply {
+                    putExtra("zona_nombre", nombreZona)
+                    putExtra("usuario_id", obtenerIdUsuario())
+                }
+                startActivity(intent)
+            }
+
+            // Hacer que parezca clickable
+            setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_right, 0)
+            compoundDrawablePadding = 16
         }
         zonaContainer.addView(title)
     }
@@ -196,13 +212,37 @@ class PantallaHome : BaseActivity() {
 
             // Imagen de la planta
             addView(ImageView(context).apply {
-                setImageResource(R.drawable.plants)
-                layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    200
-                )
-                scaleType = ImageView.ScaleType.FIT_CENTER
-                setColorFilter(ContextCompat.getColor(context, R.color.green_700))
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    300
+                ).apply {
+                    setMargins(0, 0, 0, 16)
+                }
+                scaleType = ImageView.ScaleType.CENTER_CROP
+                adjustViewBounds = true
+
+                // Cargar imagen
+                if (!planta.imagen_url.isNullOrEmpty()) {
+                    val baseUrl = "http://18.213.199.248:8000"
+                    val imageUrl = if (planta.imagen_url.startsWith("http")) {
+                        planta.imagen_url
+                    } else {
+                        // Asegurar que la URL tenga el formato correcto
+                        "$baseUrl${if (planta.imagen_url.startsWith("/")) "" else "/"}${planta.imagen_url}"
+                    }
+
+                    Log.d("IMAGE_URL", "URL completa: $imageUrl")
+
+                    Glide.with(context)
+                        .load(imageUrl)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE) // Para desarrollo
+                        .skipMemoryCache(true) // Para desarrollo
+                        .placeholder(R.drawable.plants)
+                        .error(R.drawable.plants)
+                        .into(this)
+                } else {
+                    setImageResource(R.drawable.plants)
+                }
             })
 
             // Nombre de la planta
@@ -214,12 +254,12 @@ class PantallaHome : BaseActivity() {
                 setPadding(0, 8, 0, 0)
             })
 
-            // Click listener
+            // Click listener - Versión corregida para PantallaHome
             setOnClickListener {
-                val intent = Intent(this@PantallaHome, PlantaDetail::class.java).apply {
+                val intent = Intent(context, PlantaDetailModelo::class.java).apply {
                     putExtra("planta_id", planta.id)
                 }
-                startActivity(intent)
+                context.startActivity(intent)
             }
         }
     }

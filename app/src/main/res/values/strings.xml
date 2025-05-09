@@ -4,7 +4,7 @@
     <string name="iniciarSessio">Iniciar Sessió</string>
     <string name="slogan">Perquè gestionar, significa estalviar</string>
     <string name="crearC">Crear compte</string>
-    <string name="titolNom">Nom o Adreça electrònica</string>
+    <string name="titolNom">Adreça electrònica</string>
     <string name="textNom">Insereix el teu nom:</string>
     <string name="insereixcontra">Insereix contrassenya</string>
     <string name="contrassenyaHint">**********</string>

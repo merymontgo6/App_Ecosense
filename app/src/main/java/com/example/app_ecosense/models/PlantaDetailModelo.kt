@@ -1,13 +1,10 @@
 package com.example.app_ecosense.models
 
-data class Planta(
+data class PlantaDetailModelo(
     val id: Int,
     val nom: String,
-    val ubicacio: String,
-    val sensor_id: Int,
-    val usuari_id: Int?,
-    val imagen_url: String? = null,
     val descripcio: String,
     val humitat_optim: Int,
     val estat: String,
+    val imagen_url: String?,
 )

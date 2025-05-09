@@ -2,12 +2,14 @@ package com.example.app_ecosense.info
 
 import android.util.Log
 import com.example.app_ecosense.models.Planta
-import com.example.app_ecosense.models.ZonaResponse
+import com.example.app_ecosense.models.PlantaDetailModelo
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.Path
 import java.security.SecureRandom
@@ -34,10 +36,59 @@ interface EcosenseApiService {
     suspend fun getPlantasPorZonas(
         @Query("usuari_id") usuari_id: Int
     ): List<ZonaResponse>
+
+    @GET("plantas/{id}")
+    suspend fun getPlantaDetail(@Path("id") plantaId: Int): PlantaDetailModelo
+
+    @POST("usuaris/login")
+    suspend fun loginUsuario(
+        @Body loginRequest: LoginRequest
+    ): Response<LoginResponse>
+
+    @POST("usuaris/registre")
+    suspend fun registrarUsuario(
+        @Body registroRequest: RegistreRequest
+    ): Response<RegistreResponse>
 }
 
+data class LoginRequest(
+    val email: String,
+    val contrasenya: String
+)
+
+data class LoginResponse(
+    val success: Boolean,
+    val message: String?,
+    val usuari_id: Int?,
+    val nom: String?,
+    val email: String?
+)
+
+data class RegistreRequest(
+    val nom: String,
+    val cognom: String,
+    val email: String,
+    val contrasenya: String
+)
+
+data class RegistreResponse(
+    val success: Boolean,
+    val message: String?,
+    val usuari_id: Int?,
+    val nom: String?,
+    val email: String?
+)
+
+data class ZonaResponse(
+    val zona: String,
+    val plantas: List<Planta>
+)
+
 object EcosenseApiClient {
-    private const val BASE_URL = "http://192.168.17.240:8000"
+    //private const val BASE_URL = "http://192.168.5.206:8000"
+    //private const val BASE_URL = "http://192.168.17.240:8000"
+    private const val BASE_URL = "http://18.213.199.248:8000"
+
 
     // Configuración optimizada del cliente HTTP
     private val okHttpClient = OkHttpClient.Builder()
