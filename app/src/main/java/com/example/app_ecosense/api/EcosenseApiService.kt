@@ -3,6 +3,7 @@ package com.example.app_ecosense.info
 import android.util.Log
 import com.example.app_ecosense.models.Planta
 import com.example.app_ecosense.models.PlantaDetailModelo
+import com.example.app_ecosense.models.Sensor
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -40,6 +41,14 @@ interface EcosenseApiService {
     @GET("plantas/{id}")
     suspend fun getPlantaDetail(@Path("id") plantaId: Int): PlantaDetailModelo
 
+    @GET("sensors/{sensor_id}")
+    suspend fun checkSensorExists(@Path("sensor_id") sensorId: Int): Response<Sensor>
+
+    @POST("plantes/")
+    suspend fun crearPlanta(
+        @Body planta: PlantaCreateRequest
+    ): Response<PlantaResponse>
+
     @POST("usuaris/login")
     suspend fun loginUsuario(
         @Body loginRequest: LoginRequest
@@ -49,6 +58,11 @@ interface EcosenseApiService {
     suspend fun registrarUsuario(
         @Body registroRequest: RegistreRequest
     ): Response<RegistreResponse>
+
+    @GET("humitat/{sensor_id}")
+    suspend fun getHumitatActual(
+        @Path("sensor_id") sensorId: Int
+    ): Response<HumitatResponse>
 }
 
 data class LoginRequest(
@@ -83,6 +97,35 @@ data class ZonaResponse(
     val zona: String,
     val plantas: List<Planta>
 )
+
+data class PlantaCreateRequest(
+    val nom: String,
+    val ubicacio: String,
+    val sensor_id: Int,
+    val usuari_id: Int? = null,
+    val imagen_url: String? = null
+)
+
+data class PlantaResponse(
+    val id: Int,
+    val nom: String,
+    val ubicacio: String,
+    val sensor_id: Int,
+    val usuari_id: Int?,
+    val imagen_url: String?
+)
+
+data class HumitatResponse(
+    val sensor_id: Int,
+    val valor: Float,
+    val timestamp: String
+)
+
+object ApiConfig {
+    private const val BASE_URL = "http://18.213.199.248:8000"
+    val baseUrl: String
+        get() = BASE_URL
+}
 
 object EcosenseApiClient {
     //private const val BASE_URL = "http://192.168.5.206:8000"

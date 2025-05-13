@@ -34,7 +34,6 @@
     <string name="cos">Cos</string>
     <string name="missatgecontacte">Ens posarem en contacte el més aviat possible</string>
     <string name="enviar">Enviar</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="saluts">Benvingut!</string>
     <string name="els_nostres_sensors">Els nostres sensors</string>
@@ -49,5 +48,10 @@
     <string name="els_nostres_sensors_texte2">Són fàcils d’instal·lar i es connecten amb el teu mòbil, permetent un control intel·ligent i ecològic, tant a casa com en jardins o horts.</string>
     <string name="detalls_dis">Més detalls</string>
     <string name="detalls_dis_texte">Els sensors són dissenyats per ser resistents a les condicions ambientals extremes, com ara la pluja o l`exposició al sol, garantint una llarga durabilitat i un rendiment fiable a llarg termini.</string>
-
+    <string name="afegir_planta">Afegir Planta</string>
+    <string name="nom_planta">Nom de la planta</string>
+    <string name="ubicacio">Ubicació</string>
+    <string name="sensor_id">ID del sensor</string>
+    <string name="imagen_url">URL de la imagen</string>
+    <string name="guardar">Guardar</string>
 </resources>

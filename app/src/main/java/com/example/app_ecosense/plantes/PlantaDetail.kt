@@ -101,16 +101,16 @@ class PlantaDetail : AppCompatActivity() {
             }
 
             // Configurar otros campos
-            findViewById<TextView>(R.id.reg_optim_text)?.text = "Reg òptim, ${planta.humitat_optim}%"
-            findViewById<TextView>(R.id.descripcio_text)?.text = planta.descripcio
+            //findViewById<TextView>(R.id.reg_optim_text)?.text = "Reg òptim, ${planta.humitat_optim}%"
+            //findViewById<TextView>(R.id.descripcio_text)?.text = planta.descripcio
 
             // Configurar estado de la planta
             val estatPlanta = findViewById<TextView>(R.id.estat_planta_text)
-            estatPlanta?.text = if (planta.estat == "bo") {
+            /*estatPlanta?.text = if (planta.estat == "bo") {
                 "Felicitats, la teva planta es troba bé!"
             } else {
                 "La teva planta necessita atenció!"
-            }
+            }*/
         } catch (e: Exception) {
             Log.e("PLANTA_DETAIL", "Error mostrando detalles", e)
             Toast.makeText(this, "Error mostrando información", Toast.LENGTH_SHORT).show()

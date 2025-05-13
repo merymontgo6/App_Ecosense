@@ -4,9 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
-import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -16,13 +14,16 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.app_ecosense.accesibilitat.ocultarBarra
+import com.example.app_ecosense.info.ApiConfig
 import com.example.app_ecosense.info.EcosenseApiClient
 import com.example.app_ecosense.info.ZonaResponse
 import com.example.app_ecosense.menu.BaseActivity
 import com.example.app_ecosense.menu.BottomMenu
 import com.example.app_ecosense.models.Planta
 import com.example.app_ecosense.models.PlantaDetailModelo
+import com.example.app_ecosense.plantes.AfegirPlanta
 import com.example.app_ecosense.plantes.ZonaDetail
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,6 +37,12 @@ class PantallaHome : BaseActivity() {
         ocultarBarra(window).hideSystemBar()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pantalla_home)
+
+        val fabAdd: FloatingActionButton = findViewById(R.id.fab_add_planta)
+        fabAdd.setOnClickListener {
+            val intent = Intent(this, AfegirPlanta::class.java)
+            startActivity(intent)
+        }
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_bottom, BottomMenu())
@@ -61,12 +68,9 @@ class PantallaHome : BaseActivity() {
     private fun carregarPlantasPorZonas() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val usuarioId = obtenerIdUsuario() // Usa el método para obtener el ID real
-                Log.d("DEBUG", "Cargando plantas para usuario: $usuarioId")
+                val usuarioId = obtenerIdUsuario()
 
-                // Usa el endpoint específico para plantas por zonas
                 val zonasResponse = EcosenseApiClient.service.getPlantasPorZonas(usuarioId)
-                Log.d("DEBUG", "Respuesta de API: ${zonasResponse.size} zonas")
 
                 if (zonasResponse.isEmpty()) {
                     mostrarMensajeSinPlantas()
@@ -75,7 +79,6 @@ class PantallaHome : BaseActivity() {
 
                 mostrarZonas(zonasResponse)
             } catch (e: Exception) {
-                Log.e("ERROR", "Error al cargar plantas", e)
                 mostrarMensajeError("Error al cargar las plantas: ${e.localizedMessage}")
             }
         }
@@ -223,15 +226,13 @@ class PantallaHome : BaseActivity() {
 
                 // Cargar imagen
                 if (!planta.imagen_url.isNullOrEmpty()) {
-                    val baseUrl = "http://18.213.199.248:8000"
+                    val baseUrl = ApiConfig.baseUrl
                     val imageUrl = if (planta.imagen_url.startsWith("http")) {
                         planta.imagen_url
                     } else {
-                        // Asegurar que la URL tenga el formato correcto
                         "$baseUrl${if (planta.imagen_url.startsWith("/")) "" else "/"}${planta.imagen_url}"
                     }
 
-                    Log.d("IMAGE_URL", "URL completa: $imageUrl")
 
                     Glide.with(context)
                         .load(imageUrl)

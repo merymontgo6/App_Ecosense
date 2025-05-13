@@ -74,6 +74,20 @@
                     android:padding="16dp"/>
             </LinearLayout>
         </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add_planta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="66dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_add"
+            android:backgroundTint="@color/green_700"
+            android:contentDescription="@string/afegir_planta"
+            app:elevation="8dp"
+            app:rippleColor="@color/green_900"/>
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_bottom"
             android:name="com.example.app_ecosense.menu.BottomMenu"

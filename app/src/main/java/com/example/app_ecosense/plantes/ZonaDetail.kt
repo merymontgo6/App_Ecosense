@@ -8,7 +8,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.app_ecosense.R
 
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
@@ -18,9 +17,10 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.app_ecosense.accesibilitat.ocultarBarra
+import com.example.app_ecosense.info.ApiConfig
 import com.example.app_ecosense.info.EcosenseApiClient
 import com.example.app_ecosense.models.Planta
-import com.example.app_ecosense.models.PlantaDetailModelo
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,14 +37,18 @@ class ZonaDetail : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        plantasContainer = findViewById(R.id.plantas_container)
 
+        val fabAdd: FloatingActionButton = findViewById(R.id.fab_add_planta)
+        fabAdd.setOnClickListener {
+            val intent = Intent(this, AfegirPlanta::class.java)
+            startActivity(intent)
+        }
+
+        plantasContainer = findViewById(R.id.plantas_container)
         val zonaNombre = intent.getStringExtra("zona_nombre") ?: ""
         val usuarioId = intent.getIntExtra("usuario_id", 1)
 
-        // Configurar título de la zona
         findViewById<TextView>(R.id.zona_title).text = zonaNombre
-
         cargarPlantasDeZona(usuarioId, zonaNombre)
     }
 
@@ -53,10 +57,7 @@ class ZonaDetail : AppCompatActivity() {
             try {
                 val plantas = obtenerPlantasDeZona(usuarioId, zonaNombre)
                 mostrarPlantas(plantas)
-            } catch (e: Exception) {
-                Log.e("ZONA_DETAIL", "Error al cargar plantas", e)
-                mostrarError("Error al cargar plantas: ${e.localizedMessage}")
-            }
+            } catch (e: Exception) { mostrarError("Error al cargar plantas: ${e.localizedMessage}") }
         }
     }
 
@@ -72,112 +73,140 @@ class ZonaDetail : AppCompatActivity() {
             mostrarMensajeSinPlantas()
             return
         }
-
-        plantas.forEach { planta ->
-            plantasContainer.addView(crearVistaPlanta(planta))
-        }
+        plantas.forEach { planta -> plantasContainer.addView(crearVistaPlanta(planta)) }
     }
 
     private fun crearVistaPlanta(planta: Planta): LinearLayout {
         val context = this@ZonaDetail
 
-        // Contenedor principal de la tarjeta
         return LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(16, 8, 16, 24)
-            }
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { setMargins(16, 8, 16, 24) }
             setPadding(24, 24, 24, 24)
             background = ContextCompat.getDrawable(context, R.drawable.card_background)
             elevation = 8f
-
-            // Añadir esto para feedback visual
             foreground = ContextCompat.getDrawable(context, R.drawable.ripple_effect)
             isClickable = true
             isFocusable = true
 
             // ImageView para la planta
             addView(ImageView(context).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    300
-                ).apply {
-                    setMargins(0, 0, 0, 16)
-                }
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 300
+                ).apply { setMargins(0, 0, 0, 16) }
                 scaleType = ImageView.ScaleType.CENTER_CROP
                 adjustViewBounds = true
 
-                // Cargar imagen
                 if (!planta.imagen_url.isNullOrEmpty()) {
-                    val baseUrl = "http://18.213.199.248:8000"
-                    val imageUrl = if (planta.imagen_url.startsWith("http")) {
-                        planta.imagen_url
-                    } else {
-                        // Asegurar que la URL tenga el formato correcto
-                        "$baseUrl${if (planta.imagen_url.startsWith("/")) "" else "/"}${planta.imagen_url}"
-                    }
+                    val baseUrl = ApiConfig.baseUrl
+                    val imageUrl = if (planta.imagen_url.startsWith("http")) { planta.imagen_url
+                    } else { "$baseUrl${if (planta.imagen_url.startsWith("/")) "" else "/"}${planta.imagen_url}" }
 
-                    Log.d("IMAGE_URL", "URL completa: $imageUrl")
-
-                    Glide.with(context)
-                        .load(imageUrl)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE) // Para desarrollo
-                        .skipMemoryCache(true) // Para desarrollo
-                        .placeholder(R.drawable.plants)
-                        .error(R.drawable.plants)
-                        .into(this)
-                } else {
-                    setImageResource(R.drawable.plants)
-                }
+                    Glide.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).placeholder(R.drawable.plants).error(R.drawable.plants).into(this)
+                } else { setImageResource(R.drawable.plants) }
             })
 
             // Nombre de la planta
-            addView(TextView(context).apply {
+            val headerLayout = LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                gravity = Gravity.CENTER_VERTICAL
+            }
+
+            val plantNameTextView = TextView(context).apply {
                 text = planta.nom
                 textSize = 24f
                 setTypeface(null, Typeface.BOLD)
                 setTextColor(ContextCompat.getColor(context, R.color.green_800))
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    setMargins(0, 0, 0, 8)
-                }
-            })
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            }
+            headerLayout.addView(plantNameTextView)
 
-            // Separador
-            addView(View(context).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    1
-                ).apply {
-                    setMargins(0, 0, 0, 12)
+            val editButton = ImageView(context).apply {
+                setImageResource(R.drawable.ic_edit)
+                contentDescription = "Editar planta"
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                setPadding(16, 16, 16, 16)
+                setOnClickListener {
+                    // In the edit button click listener:
+                    val intent = Intent(this@ZonaDetail, ModificarPlanta::class.java).apply {
+                        putExtra("planta_id", planta.id)
+                        putExtra("planta_nombre", planta.nom)
+                        putExtra("planta_ubicacion", planta.ubicacio)
+                        putExtra("planta_imagen", planta.imagen_url)
+                        putExtra("sensor_id", planta.sensor_id)
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    startActivity(intent)
                 }
+            }
+            headerLayout.addView(editButton)
+            addView(headerLayout)
+
+            addView(View(context).apply {
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1
+                ).apply { setMargins(0, 0, 0, 12) }
                 setBackgroundColor(ContextCompat.getColor(context, R.color.green_200))
             })
 
-            // Información de la planta
             addView(TextView(context).apply {
                 text = "Ubicación: ${planta.ubicacio}\nSensor ID: ${planta.sensor_id}"
                 textSize = 16f
                 setTextColor(ContextCompat.getColor(context, R.color.green_700))
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply { setMargins(0, 0, 0, 8) }
             })
 
-            // Click listener para toda la tarjeta
-            setOnClickListener {
+            val humitatTextView = TextView(context).apply {
+                textSize = 16f
+                setTextColor(ContextCompat.getColor(context, R.color.green_700))
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+            }
+            addView(humitatTextView)
+
+            CoroutineScope(Dispatchers.Main).launch {
                 try {
-                    val intent = Intent(this@ZonaDetail, PlantaDetailModelo::class.java).apply {
-                        putExtra("planta_id", planta.id)
-                        putExtra("planta_nombre", planta.nom)
-                        putExtra("planta_imagen", planta.imagen_url)
+                    val response = EcosenseApiClient.service.getHumitatActual(planta.sensor_id)
+
+                    when {
+                        response.isSuccessful -> {
+                            response.body()?.let { humitat ->
+                                val humedadFormateada = "%.1f".format(humitat.valor)
+                                humitatTextView.text = "Humedad: $humedadFormateada%"
+
+                                val color = when {
+                                    humitat.valor > 70 -> R.color.humidity_high
+                                    humitat.valor > 30 -> R.color.humidity_medium
+                                    else -> R.color.humidity_low
+                                }
+                                humitatTextView.setTextColor(ContextCompat.getColor(context, color))
+                            } ?: run {
+                                humitatTextView.text = "Humedad: No disponible"
+                                humitatTextView.setTextColor(ContextCompat.getColor(context, R.color.green_700))
+                            }
+                        }
+                        response.code() == 404 -> { humitatTextView.text = "Sensor no encontrado" }
+                        else -> {
+                            val errorMsg = try {
+                                response.errorBody()?.string() ?: "Error desconocido"
+                            } catch (e: Exception) { "Error al leer respuesta" }
+                            humitatTextView.text = "Error: $errorMsg"
+                        }
                     }
-                    startActivity(intent)
-                } catch (e: Exception) {
-                    Log.e("NAVIGATION", "Error al abrir PlantaDetail", e)
+                } catch (e: Exception) { humitatTextView.text = "Error de conexión" }
+            }
+
+            setOnClickListener {
+                val intent = Intent(this@ZonaDetail, PlantaDetail::class.java).apply {
+                    putExtra("planta_id", planta.id)
+                    putExtra("planta_nombre", planta.nom)
+                    putExtra("planta_imagen", planta.imagen_url)
+                    putExtra("sensor_id", planta.sensor_id)
                 }
+                startActivity(intent)
             }
         }
     }
@@ -188,12 +217,8 @@ class ZonaDetail : AppCompatActivity() {
             textSize = 18f
             gravity = Gravity.CENTER
             setTextColor(ContextCompat.getColor(context, R.color.green_800))
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(0, 32, 0, 0)
-            }
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { setMargins(0, 32, 0, 0) }
         }
         plantasContainer.addView(emptyText)
     }
@@ -204,12 +229,8 @@ class ZonaDetail : AppCompatActivity() {
             textSize = 16f
             gravity = Gravity.CENTER
             setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_dark))
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(16, 32, 16, 0)
-            }
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { setMargins(16, 32, 16, 0) }
         }
         plantasContainer.addView(errorText)
     }

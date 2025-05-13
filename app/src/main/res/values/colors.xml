@@ -20,4 +20,7 @@
     <color name="brown_800">#57341B</color>
     <color name="brown_900">#3D2312</color>
     <color name="brown_1000">#24150A</color>
+    <color name="humidity_high">#4CAF50</color>
+    <color name="humidity_medium">#FFC107</color>
+    <color name="humidity_low">#F44336</color>
 </resources>

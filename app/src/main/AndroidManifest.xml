@@ -15,6 +15,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".plantes.ModificarPlanta"
+            android:exported="false" />
+        <activity
+            android:name=".plantes.AfegirPlanta"
+            android:exported="false" />
+        <activity
             android:name=".plantes.ZonaDetail"
             android:exported="false" />
         <activity
