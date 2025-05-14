@@ -53,5 +53,12 @@
     <string name="ubicacio">Ubicació</string>
     <string name="sensor_id">ID del sensor</string>
     <string name="imagen_url">URL de la imagen</string>
+    <string name="modificarPlanta">Modificar Planta</string>
+    <string name="afegirImatge">Afegir imatge</string>
+    <string name="canviarNom">Canviar nom</string>
     <string name="guardar">Guardar</string>
+    <string name="eliminarP">Eliminar Plantaa</string>
+    <string name="infoG">Informació general</string>
+    <string name="infoGeneral">Vigileu amb els canvis sobtats de llum, temperatura o reg. Cada planta té necessitats específiques: comproveu el substrat abans de regar i assegureu-vos que reben la llum adequada. Observar-les regularment us ajudarà a detectar problemes a temps.</string>
+
 </resources>

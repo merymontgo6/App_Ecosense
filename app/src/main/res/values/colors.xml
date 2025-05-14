@@ -23,4 +23,5 @@
     <color name="humidity_high">#4CAF50</color>
     <color name="humidity_medium">#FFC107</color>
     <color name="humidity_low">#F44336</color>
+    <color name="red_600">#E53935</color>
 </resources>

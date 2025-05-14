@@ -4,18 +4,22 @@ import android.util.Log
 import com.example.app_ecosense.models.Planta
 import com.example.app_ecosense.models.PlantaDetailModelo
 import com.example.app_ecosense.models.Sensor
+import com.google.gson.internal.bind.DefaultDateTypeAdapter.DateType
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 import retrofit2.http.Path
 import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
+import java.sql.Date
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
@@ -37,6 +41,17 @@ interface EcosenseApiService {
     suspend fun getPlantasPorZonas(
         @Query("usuari_id") usuari_id: Int
     ): List<ZonaResponse>
+
+    @PUT("plantes/{planta_id}")
+    suspend fun actualizarPlanta(
+        @Path("planta_id") plantaId: Int,
+        @Body planta: PlantaUpdateRequest
+    ): Response<PlantaResponse>
+
+    @DELETE("plantes/{planta_id}")
+    suspend fun eliminarPlanta(
+        @Path("planta_id") plantaId: Int
+    ): Response<Unit>
 
     @GET("plantas/{id}")
     suspend fun getPlantaDetail(@Path("id") plantaId: Int): PlantaDetailModelo
@@ -106,6 +121,7 @@ data class PlantaCreateRequest(
     val imagen_url: String? = null
 )
 
+
 data class PlantaResponse(
     val id: Int,
     val nom: String,
@@ -115,22 +131,31 @@ data class PlantaResponse(
     val imagen_url: String?
 )
 
+data class PlantaUpdateRequest(
+    val nom: String? = null,
+    val ubicacio: String? = null,
+    val sensor_id: Int? = null,
+    val imagen_url: String? = null
+)
+
 data class HumitatResponse(
     val sensor_id: Int,
     val valor: Float,
-    val timestamp: String
+    val timestamp: Date
 )
 
 object ApiConfig {
-    private const val BASE_URL = "http://18.213.199.248:8000"
+    private const val BASE_URL = "http://192.168.5.206:8000"
+    //private const val BASE_URL = "http://18.213.199.248:8000"
+    //private const val BASE_URL = "http://192.168.17.240:8000"
     val baseUrl: String
         get() = BASE_URL
 }
 
 object EcosenseApiClient {
-    //private const val BASE_URL = "http://192.168.5.206:8000"
+    private const val BASE_URL = "http://192.168.5.206:8000"
     //private const val BASE_URL = "http://192.168.17.240:8000"
-    private const val BASE_URL = "http://18.213.199.248:8000"
+    //private const val BASE_URL = "http://18.213.199.248:8000"
 
 
     // Configuración optimizada del cliente HTTP

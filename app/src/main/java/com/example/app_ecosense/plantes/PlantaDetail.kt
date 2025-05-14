@@ -9,17 +9,21 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.example.app_ecosense.accesibilitat.ocultarBarra
 import com.example.app_ecosense.info.EcosenseApiClient
 import com.example.app_ecosense.models.Planta
 import com.example.app_ecosense.models.PlantaDetailModelo
+import com.example.app_ecosense.models.PlantasViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class PlantaDetail : AppCompatActivity() {
+    private val viewModel: PlantasViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ocultarBarra(window).hideSystemBar()
@@ -38,9 +42,17 @@ class PlantaDetail : AppCompatActivity() {
             finish()
             return
         }
+        viewModel.dataUpdateEvent.observe(this) { updateType ->
+            if (updateType == PlantasViewModel.UpdateType.PLANTA_ACTUALIZADA) {
+                val plantaId = intent.getIntExtra("planta_id", 0)
+                cargarDetallsPlanta(plantaId)
+            }
+        }
 
-        cargarDetallsPlanta(plantaId)
+        //cargarDetallsPlanta(plantaId)
     }
+
+
 
     private fun cargarDetallsPlanta(plantaId: Int) {
         // Mostrar progreso (puedes usar un ProgressBar)

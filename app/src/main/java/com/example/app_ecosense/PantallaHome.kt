@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -21,6 +22,7 @@ import com.example.app_ecosense.menu.BaseActivity
 import com.example.app_ecosense.menu.BottomMenu
 import com.example.app_ecosense.models.Planta
 import com.example.app_ecosense.models.PlantaDetailModelo
+import com.example.app_ecosense.models.PlantasViewModel
 import com.example.app_ecosense.plantes.AfegirPlanta
 import com.example.app_ecosense.plantes.ZonaDetail
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -32,6 +34,7 @@ class PantallaHome : BaseActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var zonaContainer: LinearLayout
+    private val viewModel: PlantasViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ocultarBarra(window).hideSystemBar()
@@ -44,17 +47,12 @@ class PantallaHome : BaseActivity() {
             startActivity(intent)
         }
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_bottom, BottomMenu())
-            .commit()
-
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_bottom, BottomMenu()).commit()
         drawerLayout = findViewById(R.id.main)
         zonaContainer = findViewById(R.id.zona_container)
 
         val menuIcon: ImageView = findViewById(R.id.menu_icon)
-        menuIcon.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
-        }
+        menuIcon.setOnClickListener { drawerLayout.openDrawer(GravityCompat.START) }
 
         ViewCompat.setOnApplyWindowInsetsListener(drawerLayout) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -63,24 +61,28 @@ class PantallaHome : BaseActivity() {
         }
 
         carregarPlantasPorZonas()
+
+        viewModel.dataUpdateEvent.observe(this) { updateType ->
+            when (updateType) {
+                PlantasViewModel.UpdateType.PLANTA_ACTUALIZADA,
+                PlantasViewModel.UpdateType.TODOS_LOS_DATOS -> {
+                    carregarPlantasPorZonas()
+                }else -> {}
+            }
+        }
     }
 
     private fun carregarPlantasPorZonas() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val usuarioId = obtenerIdUsuario()
-
                 val zonasResponse = EcosenseApiClient.service.getPlantasPorZonas(usuarioId)
-
                 if (zonasResponse.isEmpty()) {
                     mostrarMensajeSinPlantas()
                     return@launch
                 }
-
                 mostrarZonas(zonasResponse)
-            } catch (e: Exception) {
-                mostrarMensajeError("Error al cargar las plantas: ${e.localizedMessage}")
-            }
+            } catch (e: Exception) { mostrarMensajeError("Error al cargar las plantas: ${e.localizedMessage}") }
         }
     }
 
@@ -106,12 +108,7 @@ class PantallaHome : BaseActivity() {
                 textSize = 16f
                 gravity = Gravity.CENTER
                 setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_dark))
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    setMargins(16, 32, 16, 0)
-                }
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(16, 32, 16, 0) }
             }
             zonaContainer.addView(errorText)
         }
@@ -128,12 +125,7 @@ class PantallaHome : BaseActivity() {
             textSize = 18f
             gravity = Gravity.CENTER
             setTextColor(ContextCompat.getColor(context, R.color.green_800))
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(0, 32, 0, 0)
-            }
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0, 32, 0, 0) }
         }
         zonaContainer.addView(emptyText)
     }
@@ -145,12 +137,8 @@ class PantallaHome : BaseActivity() {
             setTypeface(null, Typeface.BOLD)
             setTextColor(ContextCompat.getColor(context, R.color.green_800))
             setPadding(0, 32, 0, 16)
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 
-            // Añadir click listener
             setOnClickListener {
                 val intent = Intent(this@PantallaHome, ZonaDetail::class.java).apply {
                     putExtra("zona_nombre", nombreZona)
@@ -158,8 +146,6 @@ class PantallaHome : BaseActivity() {
                 }
                 startActivity(intent)
             }
-
-            // Hacer que parezca clickable
             setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_right, 0)
             compoundDrawablePadding = 16
         }
@@ -168,26 +154,15 @@ class PantallaHome : BaseActivity() {
 
     private fun agregarPlantasDeZona(plantas: List<Planta>) {
         val scroll = HorizontalScrollView(this).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(0, 0, 0, 32)
-            }
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0, 0, 0, 32) }
         }
 
         val plantasContainer = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         }
 
-        plantas.forEach { planta ->
-            plantasContainer.addView(crearVistaPlanta(planta))
-        }
-
+        plantas.forEach { planta -> plantasContainer.addView(crearVistaPlanta(planta)) }
         scroll.addView(plantasContainer)
         zonaContainer.addView(scroll)
     }
@@ -204,49 +179,23 @@ class PantallaHome : BaseActivity() {
     private fun crearVistaPlanta(planta: Planta): LinearLayout {
         return LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            layoutParams = LinearLayout.LayoutParams(
-                300, // Ancho fijo
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(16, 0, 16, 0)
-            }
+            layoutParams = LinearLayout.LayoutParams(300, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(16, 0, 16, 0) }
             setPadding(16, 16, 16, 16)
             background = ContextCompat.getDrawable(context, R.drawable.planta_item_background)
 
-            // Imagen de la planta
             addView(ImageView(context).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    300
-                ).apply {
-                    setMargins(0, 0, 0, 16)
-                }
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 300).apply { setMargins(0, 0, 0, 16) }
                 scaleType = ImageView.ScaleType.CENTER_CROP
                 adjustViewBounds = true
 
-                // Cargar imagen
                 if (!planta.imagen_url.isNullOrEmpty()) {
                     val baseUrl = ApiConfig.baseUrl
-                    val imageUrl = if (planta.imagen_url.startsWith("http")) {
-                        planta.imagen_url
-                    } else {
-                        "$baseUrl${if (planta.imagen_url.startsWith("/")) "" else "/"}${planta.imagen_url}"
-                    }
-
-
-                    Glide.with(context)
-                        .load(imageUrl)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE) // Para desarrollo
-                        .skipMemoryCache(true) // Para desarrollo
-                        .placeholder(R.drawable.plants)
-                        .error(R.drawable.plants)
-                        .into(this)
-                } else {
-                    setImageResource(R.drawable.plants)
-                }
+                    val imageUrl = if (planta.imagen_url.startsWith("http")) { planta.imagen_url
+                    } else { "$baseUrl${if (planta.imagen_url.startsWith("/")) "" else "/"}${planta.imagen_url}" }
+                    Glide.with(context).load(imageUrl).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).placeholder(R.drawable.plants).error(R.drawable.plants).into(this)
+                } else { setImageResource(R.drawable.plants) }
             })
 
-            // Nombre de la planta
             addView(TextView(context).apply {
                 text = planta.nom
                 textSize = 16f
@@ -255,11 +204,8 @@ class PantallaHome : BaseActivity() {
                 setPadding(0, 8, 0, 0)
             })
 
-            // Click listener - Versión corregida para PantallaHome
             setOnClickListener {
-                val intent = Intent(context, PlantaDetailModelo::class.java).apply {
-                    putExtra("planta_id", planta.id)
-                }
+                val intent = Intent(context, PlantaDetailModelo::class.java).apply { putExtra("planta_id", planta.id) }
                 context.startActivity(intent)
             }
         }
