@@ -75,22 +75,47 @@ class ModificarPlanta : AppCompatActivity() {
     private fun cargarDatosPlanta() {
         plantaId = intent.getIntExtra("planta_id", 0)
         usuarioId = intent.getIntExtra("usuario_id", 0)
-        val nombrePlanta = intent.getStringExtra("planta_nombre") ?: ""
-        imagenUrl = intent.getStringExtra("planta_imagen") ?: ""
-        val ubicacion = intent.getStringExtra("planta_ubicacion") ?: ""
-        val sensorId = intent.getIntExtra("sensor_id", -1)
 
-        etNombrePlanta.setText(nombrePlanta)
-        etUbicacionPlanta.setText(ubicacion)
-        etSensorId.setText(if (sensorId == -1) "" else sensorId.toString())
+        if (plantaId == 0) {
+            Toast.makeText(this, "ID de planta inválido", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
 
-        if (imagenUrl.isNotEmpty()) {
-            val baseUrl = ApiConfig.baseUrl
-            val imageUrl = if (imagenUrl.startsWith("http")) { imagenUrl
-            } else { "$baseUrl${if (imagenUrl.startsWith("/")) "" else "/"}${imagenUrl}" }
-            Glide.with(this).load(imageUrl).placeholder(R.drawable.plants).error(R.drawable.plants).into(ivPlanta)
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val response = EcosenseApiClient.service.obtenerPlanta(plantaId)
+                if (response.isSuccessful) {
+                    val planta = response.body()
+                    planta?.let {
+                        etNombrePlanta.setText(it.nom)
+                        etUbicacionPlanta.setText(it.ubicacio)
+                        etSensorId.setText(it.sensor_id.toString())
+                        imagenUrl = it.imagen_url ?: ""
+
+                        if (imagenUrl.isNotEmpty()) {
+                            val baseUrl = ApiConfig.baseUrl
+                            val imageUrl = if (imagenUrl.startsWith("http")) {
+                                imagenUrl
+                            } else {
+                                "$baseUrl${if (imagenUrl.startsWith("/")) "" else "/"}$imagenUrl"
+                            }
+                            Glide.with(this@ModificarPlanta)
+                                .load(imageUrl)
+                                .placeholder(R.drawable.plants)
+                                .error(R.drawable.plants)
+                                .into(ivPlanta)
+                        }
+                    }
+                } else {
+                    Toast.makeText(this@ModificarPlanta, "Error al cargar planta", Toast.LENGTH_LONG).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@ModificarPlanta, "Error de red: ${e.message}", Toast.LENGTH_LONG).show()
+            }
         }
     }
+
 
     private fun guardarCambios() {
         val nuevoNombre = etNombrePlanta.text.toString()

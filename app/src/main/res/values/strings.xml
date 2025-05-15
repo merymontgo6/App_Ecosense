@@ -60,5 +60,9 @@
     <string name="eliminarP">Eliminar Plantaa</string>
     <string name="infoG">Informació general</string>
     <string name="infoGeneral">Vigileu amb els canvis sobtats de llum, temperatura o reg. Cada planta té necessitats específiques: comproveu el substrat abans de regar i assegureu-vos que reben la llum adequada. Observar-les regularment us ajudarà a detectar problemes a temps.</string>
-
+    <string name="infoEliminar">Abans d´eliminar qualsevol informació o dada, pensa en les possibles conseqüències. Sigues conscient i actua amb responsabilitat, ja que podries afectar processos importants o perdre informació valuosa.</string>
+    <string name="ubicacio_sensor">El sensor ID es troba integrat dins del mateix sensor, identificant-lo de manera única.</string>
+    <string name="importancia">Saber la humitat de la planta ens ajuda a determinar si rep la quantitat d´aigua que necessita. Un excés o defecte d´humitat pot afectar-ne el creixement i la salut. Gràcies a aquesta informació, podem ajustar el reg per mantenir-la en condicions òptimes.</string>
+    <string name="cuidar">Les plantes són éssers vius que depenen de nosaltres per sobreviure i créixer sanes. Una atenció adequada, com el reg correcte i la llum suficient, en millora la qualitat de vida. A més, una planta sana contribueix a un entorn més agradable i harmoniós.</string>
+    <string name="cuidar2">Les plantes purifiquen l´aire, redueixen l´estrès i contribueixen a la biodiversitat. Tenir cura d´elles no només les beneficia, sinó que també ajuda a preservar l´equilibri natural. Cada petita acció compta per a un futur més verd i sostenible.</string>
 </resources>

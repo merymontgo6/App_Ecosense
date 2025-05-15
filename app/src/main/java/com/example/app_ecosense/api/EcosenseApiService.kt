@@ -32,15 +32,17 @@ interface EcosenseApiService {
         @Query("usuari_id") usuari_id: Int
     ): List<Planta>
 
-    @GET("plantes/{planta_id}")
-    suspend fun getDetallePlanta(
-        @Path("planta_id") planta_id: Int
-    ): Response<Planta>
+    @GET("plantes/complet/{planta_id}")
+    suspend fun getDetallePlanta(@Path("planta_id") plantaId: Int): Response<PlantaDetailModelo>
 
     @GET("plantes/por-zones")
     suspend fun getPlantasPorZonas(
         @Query("usuari_id") usuari_id: Int
     ): List<ZonaResponse>
+
+    @GET("plantes/{id}")
+    suspend fun obtenerPlanta(@Path("id") id: Int): Response<Planta>
+
 
     @PUT("plantes/{planta_id}")
     suspend fun actualizarPlanta(
@@ -52,9 +54,6 @@ interface EcosenseApiService {
     suspend fun eliminarPlanta(
         @Path("planta_id") plantaId: Int
     ): Response<Unit>
-
-    @GET("plantas/{id}")
-    suspend fun getPlantaDetail(@Path("id") plantaId: Int): PlantaDetailModelo
 
     @GET("sensors/{sensor_id}")
     suspend fun checkSensorExists(@Path("sensor_id") sensorId: Int): Response<Sensor>
@@ -121,7 +120,6 @@ data class PlantaCreateRequest(
     val imagen_url: String? = null
 )
 
-
 data class PlantaResponse(
     val id: Int,
     val nom: String,
@@ -142,6 +140,10 @@ data class HumitatResponse(
     val sensor_id: Int,
     val valor: Float,
     val timestamp: Date
+)
+
+data class Humitat(
+    val valor: Int
 )
 
 object ApiConfig {

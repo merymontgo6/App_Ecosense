@@ -24,6 +24,7 @@ import com.example.app_ecosense.models.Planta
 import com.example.app_ecosense.models.PlantaDetailModelo
 import com.example.app_ecosense.models.PlantasViewModel
 import com.example.app_ecosense.plantes.AfegirPlanta
+import com.example.app_ecosense.plantes.PlantaDetail
 import com.example.app_ecosense.plantes.ZonaDetail
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
@@ -205,7 +206,7 @@ class PantallaHome : BaseActivity() {
             })
 
             setOnClickListener {
-                val intent = Intent(context, PlantaDetailModelo::class.java).apply { putExtra("planta_id", planta.id) }
+                val intent = Intent(context, PlantaDetail::class.java).apply { putExtra("planta_id", planta.id) }
                 context.startActivity(intent)
             }
         }

@@ -141,10 +141,6 @@ class ZonaDetail : AppCompatActivity() {
                 setOnClickListener {
                     val intent = Intent(this@ZonaDetail, ModificarPlanta::class.java).apply {
                         putExtra("planta_id", planta.id)
-                        putExtra("planta_nombre", planta.nom)
-                        putExtra("planta_ubicacion", planta.ubicacio)
-                        putExtra("planta_imagen", planta.imagen_url)
-                        putExtra("sensor_id", planta.sensor_id)
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     }
                     startActivity(intent)
