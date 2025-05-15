@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.app_ecosense.R
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -54,7 +53,6 @@ class PlantaDetail : AppCompatActivity() {
                 cargarDetallsPlanta(plantaId)
             }
         }
-
         cargarDetallsPlanta(plantaId)
     }
 
@@ -67,27 +65,18 @@ class PlantaDetail : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                //val response = EcosenseApiClient.service.getDetallePlanta(plantaId)
-
                 val response = EcosenseApiClient.service.getDetallePlanta(plantaId)
                 if (response.isSuccessful) {
-                    Log.e("RESPONSEEE", "Error response: $response")
                     val rawBody = response.body()
                     if (rawBody != null) {
-                        Log.e("RAWWWW", "Error response: $rawBody")
-
-                        withContext(Dispatchers.Main) {
-                            mostrarDetallsPlanta(rawBody)
-                        }
+                        withContext(Dispatchers.Main) { mostrarDetallsPlanta(rawBody) }
                     }
                 }
 
                 withContext(Dispatchers.Main) {
                     progressDialog.dismiss()
-
                     if (response.isSuccessful) {
                         response.body()?.let { plantaDetail ->
-                            Log.d("DEBUG_JSON", "humitat_valor en JSON: ${plantaDetail.humitat_valor}")
                             mostrarDetallsPlanta(plantaDetail)
                         } ?: run {
                             Toast.makeText(this@PlantaDetail, "No se encontraron datos de la planta", Toast.LENGTH_SHORT).show()
@@ -96,7 +85,6 @@ class PlantaDetail : AppCompatActivity() {
                     } else {
                         val errorBody = response.errorBody()?.string() ?: "Error desconocido"
                         Toast.makeText(this@PlantaDetail, "Error al cargar detalles: $errorBody", Toast.LENGTH_LONG).show()
-                        Log.e("API_ERROR", "Error response: $errorBody")
                         finish()
                     }
                 }
@@ -104,7 +92,6 @@ class PlantaDetail : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     progressDialog.dismiss()
                     Toast.makeText(this@PlantaDetail, "Error de conexión: ${e.message}", Toast.LENGTH_SHORT).show()
-                    Log.e("NETWORK_ERROR", "Error en la solicitud", e)
                     finish()
                 }
             }
@@ -120,16 +107,10 @@ class PlantaDetail : AppCompatActivity() {
             data.imagen_url?.takeIf { it.isNotBlank() }?.let { url ->
                 val baseUrl = ApiConfig.baseUrl
                 val fullUrl = if (url.startsWith("http")) url else "$baseUrl${if (url.startsWith("/")) "" else "/"}$url"
-
-                Glide.with(this)
-                    .load(fullUrl)
-                    .placeholder(R.drawable.plants)
-                    .error(R.drawable.plants)
-                    .into(imageView)
+                Glide.with(this).load(fullUrl).placeholder(R.drawable.plants).error(R.drawable.plants).into(imageView)
             } ?: imageView.setImageResource(R.drawable.plants)
 
             val valorHumitat = data.humitat_valor
-            Log.d("DEBUG_HUMITAT", "Valor humedad recibido: ${data.humitat_valor}")
             val humitatText = "Lectura actual d'humetat: %.1f%%".format(valorHumitat)
             findViewById<TextView>(R.id.reg_optim_text)?.text = humitatText
 
@@ -139,13 +120,8 @@ class PlantaDetail : AppCompatActivity() {
                 valorHumitat > 70 -> "La planta tiene exceso de agua!" to R.drawable.ic_sick_plant
                 else -> "Estado desconegut" to R.drawable.ic_sick_plant
             }
-
             findViewById<TextView>(R.id.estat_planta_text)?.text = textoEstado
             findViewById<ImageView>(R.id.estat_planta_icon)?.setImageResource(iconoEstado)
-
-        } catch (e: Exception) {
-            Toast.makeText(this, "Error mostrando datos", Toast.LENGTH_SHORT).show()
-            Log.e("MOSTRAR_DETALLS_ERROR", "Error: ", e)
-        }
+        } catch (e: Exception) { Toast.makeText(this, "Error mostrando datos", Toast.LENGTH_SHORT).show() }
     }
 }

@@ -55,4 +55,5 @@ dependencies {
     implementation(libs.gson)
     implementation (libs.glide.v4120)
     annotationProcessor (libs.compiler)
+    implementation (libs.androidx.swiperefreshlayout)
 }

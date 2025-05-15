@@ -12,6 +12,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.app_ecosense.accesibilitat.ocultarBarra
@@ -36,6 +37,8 @@ class PantallaHome : BaseActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var zonaContainer: LinearLayout
     private val viewModel: PlantasViewModel by viewModels()
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ocultarBarra(window).hideSystemBar()
@@ -71,6 +74,9 @@ class PantallaHome : BaseActivity() {
                 }else -> {}
             }
         }
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh)
+        swipeRefreshLayout.setOnRefreshListener { carregarPlantasPorZonas() }
+
     }
 
     private fun carregarPlantasPorZonas() {
@@ -84,6 +90,9 @@ class PantallaHome : BaseActivity() {
                 }
                 mostrarZonas(zonasResponse)
             } catch (e: Exception) { mostrarMensajeError("Error al cargar las plantas: ${e.localizedMessage}") }
+            finally {
+                swipeRefreshLayout.isRefreshing = false
+            }
         }
     }
 

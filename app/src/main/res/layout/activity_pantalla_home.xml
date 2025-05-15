@@ -11,101 +11,108 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:background="@color/green_700"
-                    android:minHeight="?attr/actionBarSize"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:id="@+id/menu_icon"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="16dp"
-                            android:src="@drawable/ic_menu"
-                            app:tint="@android:color/white" />
-
-                        <TextView
-                            android:id="@+id/toolbar_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/aladin_regular"
-                            android:text="@string/titolInici"
-                            android:textColor="@android:color/white"
-                            android:textSize="40sp"
-                            android:layout_toEndOf="@id/menu_icon"
-                            android:layout_centerVertical="true"
-                            android:textStyle="bold" />
-
-                        <ImageView
-                            android:id="@+id/user_icon"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="16dp"
-                            android:src="@drawable/ic_user"
-                            app:tint="@android:color/white" />
-                    </RelativeLayout>
-                </androidx.appcompat.widget.Toolbar>
+                android:layout_height="match_parent"
+                android:background="@android:color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_margin="20dp"
-                    android:background="@android:color/white">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/aladin_regular"
-                        android:text="@string/saluts"
-                        android:textSize="40sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/green_800"
-                        android:layout_marginTop="24dp" />
-
-                    <EditText
-                        android:id="@+id/search_bar"
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:hint="@string/search"
-                        android:drawableStart="@android:drawable/ic_menu_search"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/search_background" />
+                        android:layout_height="80dp"
+                        android:background="@color/green_700"
+                        android:minHeight="?attr/actionBarSize"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/menu_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/ic_menu"
+                                app:tint="@android:color/white" />
+
+                            <TextView
+                                android:id="@+id/toolbar_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/aladin_regular"
+                                android:text="@string/titolInici"
+                                android:textColor="@android:color/white"
+                                android:textSize="40sp"
+                                android:layout_toEndOf="@id/menu_icon"
+                                android:layout_centerVertical="true"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/user_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/ic_user"
+                                app:tint="@android:color/white" />
+                        </RelativeLayout>
+                    </androidx.appcompat.widget.Toolbar>
 
                     <LinearLayout
-                        android:id="@+id/zona_container"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:layout_marginTop="24dp" />
+                        android:layout_margin="20dp"
+                        android:background="@android:color/white">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/aladin_regular"
+                            android:text="@string/saluts"
+                            android:textSize="40sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/green_800"
+                            android:layout_marginTop="24dp" />
+
+                        <EditText
+                            android:id="@+id/search_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:hint="@string/search"
+                            android:drawableStart="@android:drawable/ic_menu_search"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/search_background" />
+
+
+                        <LinearLayout
+                            android:id="@+id/zona_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="90dp"
+                            android:orientation="vertical"
+                            android:layout_marginTop="24dp" />
+
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
+            </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_planta"
