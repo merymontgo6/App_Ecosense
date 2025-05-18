@@ -19,7 +19,6 @@ import com.example.app_ecosense.menu.BottomMenu
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 
 class AfegirPlanta : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
@@ -44,6 +43,10 @@ class AfegirPlanta : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        findViewById<ImageView>(R.id.menu_icon).setOnClickListener {
+            finish()
         }
 
         sharedPref = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)

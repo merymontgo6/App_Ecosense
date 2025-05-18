@@ -42,7 +42,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="16dp"
-                            android:src="@drawable/ic_menu"
+                            android:src="@drawable/ic_arrow_left"
                             app:tint="@android:color/white" />
 
                         <TextView
@@ -55,20 +55,9 @@
                             android:layout_toEndOf="@id/menu_icon"
                             android:layout_centerVertical="true"
                             android:textStyle="bold" />
-
-                        <ImageView
-                            android:id="@+id/user_icon"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="16dp"
-                            android:src="@drawable/ic_user"
-                            app:tint="@android:color/white" />
                     </RelativeLayout>
                 </androidx.appcompat.widget.Toolbar>
 
-                <!-- Nombre planta y botón editar -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -120,7 +109,6 @@
                         android:lineSpacingMultiplier="1.2" />
                 </LinearLayout>
 
-                <!-- Requisitos óptimos -->
                 <TextView
                     android:id="@+id/reg_optim_text"
                     android:layout_width="wrap_content"
@@ -132,7 +120,6 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <!-- Divider -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
@@ -161,7 +148,6 @@
                     android:textColor="@android:color/black"
                     android:lineSpacingMultiplier="1.2" />
 
-                <!-- Estado de la planta -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -186,7 +172,6 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <!-- Requisitos específicos -->
                 <TextView
                     android:id="@+id/requisits_text"
                     android:layout_width="match_parent"

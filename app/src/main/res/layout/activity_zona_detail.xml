@@ -40,7 +40,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="16dp"
-                            android:src="@drawable/ic_menu"
+                            android:src="@drawable/ic_arrow_left"
                             app:tint="@android:color/white" />
 
                         <TextView

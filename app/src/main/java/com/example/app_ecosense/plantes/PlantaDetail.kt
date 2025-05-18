@@ -42,6 +42,10 @@ class PlantaDetail : AppCompatActivity() {
             return
         }
 
+        findViewById<ImageView>(R.id.menu_icon).setOnClickListener {
+            finish()
+        }
+
         findViewById<ImageView>(R.id.edit_icon).setOnClickListener {
             val intent = Intent(this, ModificarPlanta::class.java)
             intent.putExtra("planta_id", plantaId)

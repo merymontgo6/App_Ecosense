@@ -41,7 +41,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="16dp"
-                            android:src="@drawable/ic_menu"
+                            android:src="@drawable/ic_arrow_left"
                             app:tint="@android:color/white" />
 
                         <TextView
@@ -56,16 +56,6 @@
                             android:layout_toEndOf="@id/menu_icon"
                             android:layout_centerVertical="true"
                             android:textStyle="bold" />
-
-                        <ImageView
-                            android:id="@+id/user_icon"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="16dp"
-                            android:src="@drawable/ic_user"
-                            app:tint="@android:color/white" />
                     </RelativeLayout>
                 </androidx.appcompat.widget.Toolbar>
 
@@ -75,6 +65,16 @@
                     android:orientation="vertical"
                     android:layout_marginTop="24dp"
                     android:layout_margin="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/nom_planta"
+                        android:textColor="@color/green_800"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -90,6 +90,16 @@
                             android:inputType="textCapWords"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/ubicacio"
+                        android:textColor="@color/green_800"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -104,6 +114,24 @@
                             android:inputType="textCapWords"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/sensor_id"
+                        android:textColor="@color/green_800"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:text="@string/ubicacio_sensor"
+                        android:textColor="@color/green_800"
+                        android:textSize="18sp" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -117,6 +145,16 @@
                             android:hint="@string/sensor_id"
                             android:inputType="number"/>
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/afegirImatge"
+                        android:textColor="@color/green_800"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"

@@ -22,8 +22,8 @@ import com.example.app_ecosense.info.ZonaResponse
 import com.example.app_ecosense.menu.BaseActivity
 import com.example.app_ecosense.menu.BottomMenu
 import com.example.app_ecosense.models.Planta
-import com.example.app_ecosense.models.PlantaDetailModelo
 import com.example.app_ecosense.models.PlantasViewModel
+import com.example.app_ecosense.models.Zona
 import com.example.app_ecosense.plantes.AfegirPlanta
 import com.example.app_ecosense.plantes.PlantaDetail
 import com.example.app_ecosense.plantes.ZonaDetail
@@ -38,7 +38,6 @@ class PantallaHome : BaseActivity() {
     private lateinit var zonaContainer: LinearLayout
     private val viewModel: PlantasViewModel by viewModels()
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ocultarBarra(window).hideSystemBar()

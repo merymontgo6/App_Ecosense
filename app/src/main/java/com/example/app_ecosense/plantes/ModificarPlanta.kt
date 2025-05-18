@@ -15,6 +15,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.example.app_ecosense.PantallaHome
 import com.example.app_ecosense.R
@@ -39,6 +40,7 @@ class ModificarPlanta : AppCompatActivity() {
     private var usuarioId: Int = 0
     private var imagenUrl: String = ""
     private val viewModel: PlantasViewModel by viewModels()
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +52,15 @@ class ModificarPlanta : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        findViewById<ImageView>(R.id.menu_icon).setOnClickListener {
+            finish()
+        }
+
         initViews()
         setupDrawerLayout()
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh)
+        swipeRefreshLayout.setOnRefreshListener { cargarDatosPlanta() }
         cargarDatosPlanta()
     }
 
@@ -112,6 +121,8 @@ class ModificarPlanta : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@ModificarPlanta, "Error de red: ${e.message}", Toast.LENGTH_LONG).show()
+            } finally {
+                swipeRefreshLayout.isRefreshing = false
             }
         }
     }

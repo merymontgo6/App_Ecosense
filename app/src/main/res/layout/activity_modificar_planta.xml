@@ -12,224 +12,228 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"
-            android:fillViewport="true">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:fillViewport="true"
+                android:overScrollMode="never">
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:background="@color/green_700"
-                    android:minHeight="?attr/actionBarSize"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <RelativeLayout
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="80dp"
+                        android:background="@color/green_700"
+                        android:minHeight="?attr/actionBarSize"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                        <ImageView
-                            android:id="@+id/menu_icon"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="16dp"
-                            android:src="@drawable/ic_menu"
-                            app:tint="@android:color/white" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/menu_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/ic_arrow_left"
+                                app:tint="@android:color/white" />
+
+                            <TextView
+                                android:id="@+id/toolbar_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@id/menu_icon"
+                                android:fontFamily="@font/aladin_regular"
+                                android:text="@string/modificarPlanta"
+                                android:textColor="@android:color/white"
+                                android:textSize="40sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+                    </androidx.appcompat.widget.Toolbar>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="20dp"
+                    android:background="@android:color/white">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/canviarNom"
+                        android:textColor="@color/green_800"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/et_nombre_planta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="@string/nom_planta"
+                        android:inputType="text"
+                        android:padding="12dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/ubicacio"
+                        android:textColor="@color/green_800"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/ubi_planta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="@string/ubicacio"
+                        android:inputType="text"
+                        android:padding="12dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/sensor_id"
+                        android:textColor="@color/green_800"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:text="@string/ubicacio_sensor"
+                        android:textColor="@color/green_800"
+                        android:textSize="18sp" />
+
+                        <EditText
+                        android:id="@+id/id_Sensor_planta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:hint="@string/sensor_id"
+                        android:inputType="text"
+                        android:padding="12dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/afegirImatge"
+                        android:textColor="@color/green_700"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/iv_planta"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/plants" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/green_200" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/infoG"
+                        android:textColor="@color/green_800"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/toolbar_title"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toEndOf="@id/menu_icon"
-                            android:fontFamily="@font/aladin_regular"
-                            android:text="@string/modificarPlanta"
-                            android:textColor="@android:color/white"
-                            android:textSize="40sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-                </androidx.appcompat.widget.Toolbar>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/canviarNom"
-                    android:textColor="@color/green_800"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/infoGeneral"
+                            android:textColor="@color/green_700" />
 
-                <EditText
-                    android:id="@+id/et_nombre_planta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="@string/nom_planta"
-                    android:inputType="text"
-                    android:padding="12dp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/green_200" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/ubicacio"
-                    android:textColor="@color/green_800"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_guardar_canvis"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/dark_green_bg"
+                        android:text="@string/guardar"
+                        android:textColor="@android:color/white"/>
 
-                <EditText
-                    android:id="@+id/ubi_planta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="@string/ubicacio"
-                    android:inputType="text"
-                    android:padding="12dp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/green_200" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/infoEliminar"
+                        android:textColor="@color/green_700" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/sensor_id"
-                    android:textColor="@color/green_800"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="15dp"
-                    android:text="@string/ubicacio_sensor"
-                    android:textColor="@color/green_800"
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:id="@+id/id_Sensor_planta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="@string/sensor_id"
-                    android:inputType="text"
-                    android:padding="12dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/afegirImatge"
-                    android:textColor="@color/green_700"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/iv_planta"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/plants" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@color/green_200" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/infoG"
-                    android:textColor="@color/green_800"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/infoGeneral"
-                    android:textColor="@color/green_700" />
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@color/green_200" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_guardar_canvis"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/dark_green_bg"
-                    android:text="@string/guardar"
-                    android:textColor="@android:color/white"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@color/green_200" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/infoEliminar"
-                    android:textColor="@color/green_700" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_eliminar_planta"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="90dp"
-                    android:background="@drawable/red_button_bg"
-                    android:text="@string/eliminarP"
-                    android:textColor="@android:color/white"/>
-            </LinearLayout>
-        </ScrollView>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_eliminar_planta"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="90dp"
+                        android:background="@drawable/red_button_bg"
+                        android:text="@string/eliminarP"
+                        android:textColor="@android:color/white"/>
+                </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_bottom"

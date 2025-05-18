@@ -48,6 +48,10 @@ class ZonaDetail : AppCompatActivity() {
             startActivity(intent)
         }
 
+        findViewById<ImageView>(R.id.menu_icon).setOnClickListener {
+            finish()
+        }
+
         plantasContainer = findViewById(R.id.plantas_container)
         val zonaNombre = intent.getStringExtra("zona_nombre") ?: ""
         val usuarioId = intent.getIntExtra("usuario_id", 1)
