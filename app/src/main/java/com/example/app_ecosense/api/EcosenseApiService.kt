@@ -129,16 +129,12 @@ data class HumitatResponse(
 )
 
 object ApiConfig {
-    //private const val BASE_URL = "http://192.168.5.206:8000"
-    //private const val BASE_URL = "http://18.213.199.248:8000"
-    private const val BASE_URL = "http://192.168.17.240:8000"
+    private const val BASE_URL = "http://18.213.199.248:8000"
     val baseUrl: String
         get() = BASE_URL
 }
 
 object EcosenseApiClient {
-    //private const val BASE_URL = "http://18.213.199.248:8000"
-    private const val BASE_URL = "http://192.168.17.240:8000"
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
@@ -147,7 +143,7 @@ object EcosenseApiClient {
         .build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(ApiConfig.baseUrl)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

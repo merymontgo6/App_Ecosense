@@ -15,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.app_ecosense.accesibilitat.ocultarBarra
@@ -31,6 +32,7 @@ class ZonaDetail : AppCompatActivity() {
 
     private lateinit var plantasContainer: LinearLayout
     private val viewModel: PlantasViewModel by viewModels()
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ocultarBarra(window).hideSystemBar()
@@ -70,7 +72,13 @@ class ZonaDetail : AppCompatActivity() {
                 }
             }
         }
-    }
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh)
+        swipeRefreshLayout.setOnRefreshListener {
+            val usuarioId = intent.getIntExtra("usuario_id", 0)
+            val zonaNombre = intent.getStringExtra("zona_nombre") ?: ""
+            cargarPlantasDeZona(usuarioId, zonaNombre)
+        }    }
 
     private fun cargarPlantasDeZona(usuarioId: Int, zonaNombre: String) {
         CoroutineScope(Dispatchers.Main).launch {
@@ -78,6 +86,9 @@ class ZonaDetail : AppCompatActivity() {
                 val plantas = obtenerPlantasDeZona(usuarioId, zonaNombre)
                 mostrarPlantas(plantas)
             } catch (e: Exception) { mostrarError("Error al cargar plantas: ${e.localizedMessage}") }
+            finally {
+                swipeRefreshLayout.isRefreshing = false
+            }
         }
     }
 

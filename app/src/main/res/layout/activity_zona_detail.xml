@@ -11,60 +11,65 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:background="@android:color/white">
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:background="@color/green_700"
-                    android:minHeight="?attr/actionBarSize"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <RelativeLayout
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="80dp"
+                        android:background="@color/green_700"
+                        android:minHeight="?attr/actionBarSize"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                        <ImageView
-                            android:id="@+id/menu_icon"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="16dp"
-                            android:src="@drawable/ic_arrow_left"
-                            app:tint="@android:color/white" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                        <TextView
-                            android:id="@+id/zona_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/aladin_regular"
-                            android:textColor="@android:color/white"
-                            android:textSize="30sp"
-                            android:layout_toEndOf="@id/menu_icon"
-                            android:layout_centerVertical="true"
-                            android:textStyle="bold" />
+                            <ImageView
+                                android:id="@+id/menu_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/ic_arrow_left"
+                                app:tint="@android:color/white" />
 
-                        <ImageView
-                            android:id="@+id/user_icon"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="16dp"
-                            android:src="@drawable/ic_user"
-                            app:tint="@android:color/white" />
-                    </RelativeLayout>
-                </androidx.appcompat.widget.Toolbar>
+                            <TextView
+                                android:id="@+id/zona_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/aladin_regular"
+                                android:textColor="@android:color/white"
+                                android:textSize="30sp"
+                                android:layout_toEndOf="@id/menu_icon"
+                                android:layout_centerVertical="true"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/user_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/ic_user"
+                                app:tint="@android:color/white" />
+                        </RelativeLayout>
+                    </androidx.appcompat.widget.Toolbar>
 
                 <LinearLayout
                     android:id="@+id/plantas_container"
@@ -74,6 +79,8 @@
                     android:padding="16dp"/>
             </LinearLayout>
         </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_planta"
